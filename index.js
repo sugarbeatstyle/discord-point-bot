@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
 // 設定の読み込み
@@ -28,6 +29,15 @@ const client = new Client({
         GatewayIntentBits.GuildMembers,
     ],
     partials: [Partials.Message, Partials.Channel, Partials.Reaction],
+});
+
+// RenderのWeb Serviceを無料運用するため、簡易HTTPサーバーを立ててポートを開ける
+const PORT = process.env.PORT || 3000;
+http.createServer((_, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Discord bot is running\n');
+}).listen(PORT, () => {
+    console.log(`HTTP server listening on port ${PORT}`);
 });
 
 const SETTINGS_FILE = path.join(__dirname, 'settings.json');
