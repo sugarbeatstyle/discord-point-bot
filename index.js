@@ -9,6 +9,15 @@ const JUDGE_ROLE_NAME = process.env.JUDGE_ROLE_NAME || 'judge';
 const TARGET_EMOJI = process.env.TARGET_EMOJI || '✅';
 const POINTS_FILE = path.join(__dirname, 'points.json');
 
+// デバッグログ: 環境変数の確認
+if (!TOKEN) {
+    console.error('エラー: DISCORD_TOKEN が設定されていません。');
+} else {
+    console.log(`トークン読み込み成功: ${TOKEN.substring(0, 5)}...`);
+}
+console.log(`判定ロール: ${JUDGE_ROLE_NAME}`);
+console.log(`ターゲット絵文字: ${TARGET_EMOJI}`);
+
 // クライアントの初期化
 const client = new Client({
     intents: [
